@@ -1,11 +1,22 @@
 import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+
+import { Login, NotFound } from "./page";
 
 class Hello extends React.Component {
   render() {
     return (
-      <div>
-        <h1>Hello World</h1>
-      </div>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Login} />
+          <Route component={NotFound} />
+        </Switch>
+      </Router>
     );
   }
 }
