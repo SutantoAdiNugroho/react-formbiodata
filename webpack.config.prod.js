@@ -11,4 +11,5 @@ module.exports = merge(baseConfig, {
       reportFilename: "bundle_sizes.html",
     }),
   ],
+  devtool: "source-map",
 });
