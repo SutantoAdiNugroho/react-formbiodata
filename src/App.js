@@ -1,22 +1,40 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { Login, NotFound } from "./page";
 
+import {
+  createMuiTheme,
+  responsiveFontSizes,
+  ThemeProvider,
+} from "@material-ui/core/styles";
+
 class Hello extends React.Component {
   render() {
+    let theme = createMuiTheme({
+      typography: {
+        fontFamily: ["Oxygen", "sans-serif"].join(","),
+        subtitle1: {
+          fontSize: 19,
+        },
+        subtitle2: {
+          fontSize: 14,
+          fontStyle: "italic",
+          color: "#E22C2C",
+        },
+      },
+    });
+    theme = responsiveFontSizes(theme);
+
     return (
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Login} />
-          <Route component={NotFound} />
-        </Switch>
-      </Router>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Login} />
+            <Route component={NotFound} />
+          </Switch>
+        </Router>
+      </ThemeProvider>
     );
   }
 }
