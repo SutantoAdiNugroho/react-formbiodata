@@ -1,5 +1,4 @@
 import { axiosReportsUsers } from "../../helpers/axios";
-import { verify } from "../../helpers/verify";
 import swal from "sweetalert2";
 
 export const SHOW_LOADER = "SHOW_LOADER";
@@ -24,119 +23,41 @@ export const hideLoader = () => (dispatch) => {
   });
 };
 
-export const login = (params, history) => (dispatch) => {
+export const postBio = (params, history) => (dispatch) => {
   dispatch({ type: SHOW_LOADER });
   return axiosReportsUsers()
-    .post("auth/user/login", params)
+    .post("form/postbio", params)
     .then((response) => {
       dispatch({ type: HIDE_LOADER });
-      swal
-        .fire("Login berhasil", "", "success")
-        .then(async (res) => {
-          localStorage.setItem(
-            "token",
-            JSON.stringify(response.data.data.token)
-          );
-        })
-        .then((res) => {
-          if (params.role === "admin") {
-            dispatch(dashboard());
-            history.push("/admin/dashboard");
-          } else {
-            dispatch(dashboardTch());
-            history.push("/teacher/dashboard");
-          }
-        });
-    })
-    .catch((error) => {
-      if (error.response) {
-        switch (error.response.status) {
-          case 404:
-            swal.fire("Email tidak ditemukan", "", "error");
-            break;
-          case 401:
-            swal.fire("Password salah", "", "error");
-            break;
-
-          default:
-            swal.fire("Login gagal, silahkan coba kembali", "", "error");
-            break;
-        }
-      } else {
-        swal.fire("Login gagal, silahkan coba kembali", "", "error");
-      }
-      var errorData = { data: {}, message: error };
-
-      dispatch({ type: HIDE_LOADER });
-      dispatch({ type: ERROR_AUTH, payload: errorData });
-    });
-};
-
-export const register = (params, history) => (dispatch) => {
-  const typeName = params.role === "teacher" ? "guru" : "siswa";
-  dispatch({ type: SHOW_LOADER });
-  return axiosReportsUsers()
-    .post("auth/user/regist", params)
-    .then((response) => {
-      dispatch({ type: HIDE_LOADER });
-      alert(`Pembuatan akun ${typeName} berhasil`);
-      dispatch(dashboard());
-
+      swal.fire("Berhasil mengirim data", "", "success");
       return RESP_SUCCESS;
     })
     .catch((error) => {
-      console.log("error occured", error);
       if (error.response) {
         switch (error.response.status) {
           case 400:
-            alert("Email telah digunakan");
+            swal.fire(
+              "Email sudah digunakan, silahkan gunakan email lainnya",
+              "",
+              "error"
+            );
             break;
 
           default:
-            alert("Gagal mengambil data, silahkan coba kembali");
+            swal.fire(
+              "Gagal mengirim data, silahkan coba kembali",
+              "",
+              "error"
+            );
             break;
         }
       } else {
-        alert("Gagal mengambil data, silahkan coba kembali");
+        swal.fire("Gagal mengirim data, silahkan coba kembali", "", "error");
       }
-      dispatch({ type: ERROR_AUTH, payload: error });
+      var errorData = { data: {}, message: error };
 
+      dispatch({ type: HIDE_LOADER });
+      dispatch({ type: ERROR_AUTH, payload: errorData });
       return RESP_ERROR;
-    });
-};
-
-export const dashboard = () => (dispatch) => {
-  dispatch({ type: SHOW_LOADER });
-  return axiosReportsUsers()
-    .get("users/admin/dash")
-    .then((response) => {
-      dispatch({ type: HIDE_LOADER });
-      dispatch({ type: LOGIN, payload: response.data });
-    })
-    .catch((error) => {
-      console.log(error);
-      alert("Gagal mengambil data, silahkan coba kembali");
-      var errorData = { data: {}, message: error };
-
-      dispatch({ type: HIDE_LOADER });
-      dispatch({ type: ERROR_AUTH, payload: errorData });
-    });
-};
-
-export const dashboardTch = () => (dispatch) => {
-  dispatch({ type: SHOW_LOADER });
-  return axiosReportsUsers()
-    .get(`users/teacher/dash?teacherId=${verify()._id}`)
-    .then((response) => {
-      dispatch({ type: HIDE_LOADER });
-      dispatch({ type: LOGIN, payload: response.data });
-    })
-    .catch((error) => {
-      console.log(error);
-      alert("Gagal mengambil data, silahkan coba kembali");
-      var errorData = { data: {}, message: error };
-
-      dispatch({ type: HIDE_LOADER });
-      dispatch({ type: ERROR_AUTH, payload: errorData });
     });
 };
