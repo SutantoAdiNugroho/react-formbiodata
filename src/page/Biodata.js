@@ -265,14 +265,27 @@ export default function AddressForm() {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <Button
-                disabled={formik.isSubmitting}
-                variant="contained"
-                type="submit"
-                color="primary"
-              >
-                Submit
-              </Button>
+              <Box display="flex">
+                <Box p={1}>
+                  <Button
+                    disabled={formik.isSubmitting}
+                    variant="contained"
+                    type="submit"
+                    color="primary"
+                  >
+                    Submit
+                  </Button>
+                </Box>
+                <Box p={1}>
+                  <Button
+                    onClick={formik.resetForm}
+                    variant="contained"
+                    color="secondary"
+                  >
+                    Reset
+                  </Button>
+                </Box>
+              </Box>
             </Grid>
           </Grid>
         </form>

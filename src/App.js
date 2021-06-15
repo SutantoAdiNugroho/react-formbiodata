@@ -2,7 +2,7 @@ import "./assets/css/main.css";
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import { Biodata, NotFound } from "./page";
+import { Biodata, BiodataList, NotFound } from "./page";
 
 import {
   createMuiTheme,
@@ -32,6 +32,7 @@ class Hello extends React.Component {
         <Router>
           <Switch>
             <Route exact path="/" component={Biodata} />
+            <Route exact path="/bio/list" component={BiodataList} />
             <Route component={NotFound} />
           </Switch>
         </Router>
