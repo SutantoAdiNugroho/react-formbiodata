@@ -72,6 +72,10 @@ export default function AddressForm() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const redirectList = () => {
+    history.push("/bio/list");
+  };
+
   const ModalCreating = () => {
     const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
@@ -266,25 +270,38 @@ export default function AddressForm() {
             </Grid>
             <Grid item xs={12}>
               <Box display="flex">
-                <Box p={1}>
-                  <Button
-                    disabled={formik.isSubmitting}
-                    variant="contained"
-                    type="submit"
-                    color="primary"
-                  >
-                    Submit
-                  </Button>
-                </Box>
-                <Box p={1}>
-                  <Button
-                    onClick={formik.resetForm}
-                    variant="contained"
-                    color="secondary"
-                  >
-                    Reset
-                  </Button>
-                </Box>
+                <Grid container justify="flex-start">
+                  <Box p={0.5}>
+                    <Button
+                      disabled={formik.isSubmitting}
+                      variant="contained"
+                      type="submit"
+                      color="primary"
+                    >
+                      Submit
+                    </Button>
+                  </Box>
+                  <Box p={0.5}>
+                    <Button
+                      onClick={formik.resetForm}
+                      variant="contained"
+                      color="secondary"
+                    >
+                      Reset
+                    </Button>
+                  </Box>
+                </Grid>
+                <Grid container justify="flex-end">
+                  <Box p={0.5}>
+                    <Button
+                      onClick={redirectList}
+                      variant="contained"
+                      color="inherit"
+                    >
+                      Biodata List
+                    </Button>
+                  </Box>
+                </Grid>
               </Box>
             </Grid>
           </Grid>
