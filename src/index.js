@@ -5,6 +5,8 @@ import App from "./App";
 import { Provider } from "react-redux";
 import store from "./store";
 
+import "@babel/polyfill";
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

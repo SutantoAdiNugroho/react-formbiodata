@@ -16,7 +16,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 
 import { useFormik } from "formik";
-import swal from "sweetalert2";
 import * as yup from "yup";
 
 import { useDispatch, useSelector } from "react-redux";

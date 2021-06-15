@@ -1,9 +1,15 @@
-import jwt from "jsonwebtoken";
+import jwt from "jwt-decode";
 
 export const verify = () => {
   const token = JSON.parse(localStorage.getItem("token"));
+  let decoded;
 
-  var decoded = jwt.verify(token, process.env.REACT_APP_JWT_SECRET_KEY);
+  try {
+    decoded = jwt(token);
+  } catch (error) {
+    console.log(error);
+    decoded = "nothing";
+  }
 
   return decoded;
 };

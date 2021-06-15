@@ -34,12 +34,18 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
   },
+  resolve: {
+    fallback: { crypto: false },
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "public", "index.html"),
     }),
     new FaviconsWebpackPlugin("./public/logo-190.png"),
     new webpack.ProgressPlugin(),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
     new webpack.DefinePlugin({
       "process.env": {
         REACT_APP_API_LOGIN_LIVE: JSON.stringify(
